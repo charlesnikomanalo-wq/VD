@@ -5,7 +5,7 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,18 +15,19 @@ body {
   background-size: cover;
   background-position: center;
   font-family: 'Arial', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  padding: 20px;
 }
 
 .card-container {
   position: relative;
-  width: 350px;
+  width: 350px;  /* desktop default */
 }
 
 /* ENVELOPE */
 .envelope {
   position: relative;
-  width: 100%;
+  width: 350px;  
   height: 220px;
   background: linear-gradient(135deg, #ff758f, #ff4d6d);
   border-radius: 16px;
@@ -116,16 +117,16 @@ body {
 
 /* FULL LETTER */
 .full-letter {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  width: 150%;              /* wider */
-  max-width: 900px;        /* increased from 600px */
+  width: 900px;       /* desktop size */
+  max-width: 900px;
   max-height: 80vh;
   overflow-y: auto;
   transform: translate(-50%, -50%) translateY(120%);
   background: #fdf0d5;
-  padding: 40px;           /* more padding for better spacing */
+  padding: 40px;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   color: #333;
@@ -135,6 +136,7 @@ body {
   text-align: left;
   transition: transform 1s ease, opacity 1s ease;
   opacity: 0;
+  z-index: 100;
 }
 
 .full-letter.show {
@@ -166,15 +168,53 @@ body {
 }
 
 .full-letter::-webkit-scrollbar-track {
-  background: #f7e6cf;  /* slightly lighter beige */
+  background: #f7e6cf;
   border-radius: 8px;
 }
 
 .full-letter::-webkit-scrollbar-thumb {
-  background: #d4b483;  /* darker beige for thumb */
+  background: #d4b483;
   border-radius: 8px;
 }
 
 .full-letter::-webkit-scrollbar-thumb:hover {
-  background: #b38f5c;  /* darker on hover */
+  background: #b38f5c;
+}
+
+/* RESPONSIVE FOR MOBILE */
+@media (max-width: 768px) {
+  .card-container {
+    width: 90%; /* scale down envelope */
+    max-width: none;
+  }
+
+  .envelope {
+    height: calc(220 / 350 * 90vw); /* keep aspect ratio */
+  }
+
+  .envelope-icon {
+    font-size: 10vw;
+    width: 12vw;
+    height: 12vw;
+  }
+
+  .letter-preview {
+    font-size: 5vw;
+    padding: 5%;
+  }
+
+  .full-letter {
+    width: 90%;
+    padding: 5%;
+    font-size: 4.5vw;
+    max-height: 90vh;
+  }
+
+  .full-letter h2 {
+    font-size: 6vw;
+  }
+
+  .full-letter .from {
+    font-size: 5vw;
+  }
 }
